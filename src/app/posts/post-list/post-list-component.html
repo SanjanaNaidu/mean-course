@@ -1,8 +1,26 @@
-<mat-accordion>
-    <mat-expansion-panel>
+<!--
+<mat-accordion multi = "true" *ngIf="posts?.length>0">
+   <mat-expansion-panel *ngFor="let post of posts" >
         <mat-expansion-panel-header>
-          The mat-expansion-title
+          {{ post.title }}
         </mat-expansion-panel-header>
-        <p>I am an mat-expansion-panel</p>
+        <p>{{ post.content }}</p>
     </mat-expansion-panel>
 </mat-accordion>
+<p class="info-text mat-body-1" *ngIf="posts.length<=0"> No posts added</p>
+-->
+<mat-accordion multi="true" *ngIf="posts && posts.length > 0">
+  <mat-expansion-panel *ngFor="let post of posts">
+    
+    <mat-expansion-panel-header>
+      {{ post.title }}
+    </mat-expansion-panel-header>
+    <p>{{ post.content }}</p>
+    <mat-action-row>
+      <button mat-button>Edit</button>
+      <button mat-button>Delete</button>
+
+    </mat-action-row>
+  </mat-expansion-panel>
+</mat-accordion>
+<p class="info-text mat-body-1" *ngIf="!(posts && posts.length > 0)">No posts added</p>

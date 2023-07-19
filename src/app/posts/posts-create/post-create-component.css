@@ -6,3 +6,10 @@ mat-form-field,
 textarea{
     width:100%;
 }
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px; /* Add some top margin to separate the button from the form fields */
+  }
+  
