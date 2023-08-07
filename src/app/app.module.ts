@@ -13,6 +13,8 @@ import { HeaderComponent } from './header/header-component';
 import { PostListComponent } from './posts/post-list/post-list-component';
 import {MatExpansionModule} from   '@angular/material/expansion';
 import { PostService } from './posts/post.service';
+import {HttpClientModule} from "@angular/common/http";
+
 //import { MatAccordionModule } from '@angular/material/accordion';
 
 @NgModule({
@@ -28,6 +30,7 @@ import { PostService } from './posts/post.service';
     MatButtonModule,
     MatToolbarModule,
     MatExpansionModule,
+    HttpClientModule
     
   ],
   providers: [PostService],
