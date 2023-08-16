@@ -1,31 +1,35 @@
-import {Component,OnDestroy,OnInit} from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Subscription } from "rxjs";
-import {Post} from "../post.model";
+import { Post } from "../post.model";
 import { PostService } from "../post.service";
-@Component({
-    selector: 'app-post-list',
-    templateUrl: './post-list-component.html',
-    styleUrls:['./post-list-component.css']
 
+@Component({
+  selector: 'app-post-list',
+  templateUrl: './post-list-component.html',
+  styleUrls: ['./post-list-component.css']
 })
-export class PostListComponent implements OnInit, OnDestroy{
-    posts:Post[] =[];
-    private postsSub!: Subscription;
-   //postService: PostService;
-   constructor(public postService:PostService){
-    //this.postService=postService;
-   }
-    ngOnInit(){
-        //throw new Error("Method not implemented.");
-        this.posts = this.postService.getPosts();
-        this.postsSub=this.postService.getPostUpdateListener().subscribe((posts:Post[]) =>{
-             this.posts=posts;
-        });
+export class PostListComponent implements OnInit, OnDestroy {
+  posts: Post[] = [];
+  private postsSub!: Subscription;
+
+  constructor(public postService: PostService) {}
+
+  ngOnInit() {
+    this.postService.getPosts();
+    this.postsSub = this.postService.getPostUpdateListener().subscribe((posts: Post[]) => {
+      this.posts = posts;
+    });
+  }
+
+  onDelete(postId: string | null | undefined) {
+    console.log('onDelete called with postId:', postId);
+    if (postId) {
+      console.log('Calling deletePost with postId:', postId);
+      this.postService.deletePost(postId);
     }
-    onDelete(postId: string){
-        this.postService.deletePost(postId);
-    }
-    ngOnDestroy(): void {
-        this.postsSub.unsubscribe();
-    }
+  }
+
+  ngOnDestroy(): void {
+    this.postsSub.unsubscribe();
+  }
 }
