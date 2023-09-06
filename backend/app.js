@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser'); // Import body-parser to parse request bodies
 const mongoose = require("mongoose");
 const Post = require('./models/post');
-
+const postsRoutes = require("./routes/posts");
 const app = express();
 
 mongoose.connect("mongodb+srv://Sanjana:Sanju2708@cluster0.r3d2nvw.mongodb.net/node-angular")
@@ -36,6 +36,18 @@ app.post("/api/posts", (req, res, next) => {
     });
 });
 
+app.put("/api/posts/:id",(req,res,next)=>{
+    const post = new Post({
+        _id:req.body.id,
+        title:req.body.title,
+        content:req.body.content
+    });
+    Post.updateOne({_id:req.params.id},post).then(result=>{
+        console.log(result);
+        res.status(200).json({message: "Update successful"});
+    });
+});
+
 app.get("/api/posts", (req, res, next) => {
 
     Post.find()
@@ -48,6 +60,16 @@ app.get("/api/posts", (req, res, next) => {
     });
 });
 });
+
+app.get("/api/posts/:id",(req,res,next) =>{
+    Post.findById(req.params.id).then(post=>{
+        if(post){
+            res.status(200).json();
+        }else{
+           res.status(404).json({message:'Post not found!'}); 
+        }
+    })
+})
 app.delete("/api/posts/:id",(req,res,next) =>{
     Post.deleteOne({_id:req.params.id}).then(result=>{
         console.log(req.params.id);  
@@ -55,4 +77,7 @@ app.delete("/api/posts/:id",(req,res,next) =>{
     res.status(200).json({message:"Post deleted!"});
 });
 });
+
+
+app.use("/api/posts",postsRoutes);
 module.exports = app;
