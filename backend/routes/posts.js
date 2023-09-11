@@ -10,6 +10,8 @@ const MIME_TYPE_MAP={
     'image/jpg':'jpg'
 }
 
+
+
 const storage=multer.diskStorage({
     destination:(req,file,cb)=>{
       const isValid = MIME_TYPE_MAP[file.mimetype];
