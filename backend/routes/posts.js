@@ -43,6 +43,7 @@ router.post("",multer({storage:storage}).single("image"), (req, res, next) => {
                     ...createdPost,
                     id:createdPost._id,
                     
+                    
                 }
             });
         })

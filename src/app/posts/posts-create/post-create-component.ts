@@ -42,7 +42,7 @@ export class PostCreateComponent implements OnInit {
                     this.postService.getPost(this.postId).subscribe(postData => {
                         // Initialize the post property with the fetched data
                         this.isLoading = false;
-                        this.post = { id: postData._id, title: postData.title, content: postData.content,imagePath:null };
+                        this.post = { id: postData._id, title: postData.title, content: postData.content };
                         this.form.setValue({'title':this.post.title,
                     content:this.post.content});
                     });
@@ -56,19 +56,6 @@ export class PostCreateComponent implements OnInit {
             }
         });
     }
-    //onImagePicked(event:Event){
-    //    const file = (event.target as HTMLInputElement);
-      //  const file= fileInput.files?.[0];
-      //  this.form.patchValue({image:file});
-       // this.form.get('image')?.updateValueAndValidity();
-        //console.log(this.form);
-        //const reader = new FileReader();
-        //reader.onload=()=>{
-          //  this.imagePreview = reader.result as string;
-        //};
-        //reader.readAsDataURL(file);
-
-    //}
     onImagePicked(event: Event) {
         const fileInput = event.target as HTMLInputElement;
         const file = fileInput.files?.[0];
@@ -92,10 +79,10 @@ export class PostCreateComponent implements OnInit {
         this.isLoading=true;
         const title = this.form.value.title || "";
         const content = this.form.value.content || "";
-        const image = this.form.value.image||"";
+        
     
         if (this.mode === "create") {
-            this.postService.addPost(title, content,image);
+            this.postService.addPost(title, content);
         } else if (this.mode === "edit" && this.postId) {
             this.postService.updatePost(this.postId, title, content);
         }
