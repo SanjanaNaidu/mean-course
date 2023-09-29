@@ -1,5 +1,6 @@
 a{
     text-decoration: rgb(255, 255, 255);
+    color:aqua;
 }
 ul{
     list-style: none;
@@ -8,4 +9,7 @@ ul{
 }
 .spacer{
    flex:1 1 auto;
+}
+ul{
+    display:flex;
 }
