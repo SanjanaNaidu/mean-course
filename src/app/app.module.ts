@@ -13,12 +13,13 @@ import { HeaderComponent } from './header/header-component';
 import { PostListComponent } from './posts/post-list/post-list-component';
 import {MatExpansionModule} from   '@angular/material/expansion';
 import { PostService } from './posts/post.service';
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatProgressSpinnerModule} from '@angular/material/progress-spinner'
 import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator'
 import { LoginComponent } from './auth/login/login.component';
 import {SignupComponent} from './auth/signup/signup.component';
+import { AuthInterceptor } from './auth/auth-interceptor';
 //import { MatAccordionModule } from '@angular/material/accordion';
 
 @NgModule({
@@ -43,7 +44,7 @@ import {SignupComponent} from './auth/signup/signup.component';
 
     
   ],
-  providers: [PostService],
+  providers: [{provide:HTTP_INTERCEPTORS,useClass:AuthInterceptor,multi:true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -3,6 +3,7 @@ const bodyParser = require('body-parser'); // Import body-parser to parse reques
 const mongoose = require("mongoose");
 const Post = require('./models/post');
 const postsRoutes = require("./routes/posts");
+const userRoutes = require("./routes/user");
 const app = express();
 
 mongoose.connect("mongodb+srv://Sanjana:Sanju2708@cluster0.r3d2nvw.mongodb.net/node-angular")
@@ -80,4 +81,6 @@ app.delete("/api/posts/:id",(req,res,next) =>{
 
 
 app.use("/api/posts",postsRoutes);
+app.use("/api/user",userRoutes);
+
 module.exports = app;

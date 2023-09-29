@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Post = require("../models/post"); // Corrected the require path
-
+const checkAuth = require("../middleware/check-auth");
 // Create a new post
 const multer = require("multer");
 const MIME_TYPE_MAP={
@@ -27,7 +27,10 @@ const storage=multer.diskStorage({
         cb(null,name+'-'+Date.now()+'.'+ext);
     }
 });
-router.post("",multer({storage:storage}).single("image"), (req, res, next) => {
+router.post(
+    "",
+    checkAuth,
+    multer({storage:storage}).single("image"), (req, res, next) => {
     const url = req.protocol+'://'+req.get("host");
     const post = new Post({
         title: req.body.title,
@@ -56,6 +59,7 @@ router.post("",multer({storage:storage}).single("image"), (req, res, next) => {
 
 // Update a post
 router.put(":id", (req, res, next) => {
+    "./id",checkAuth
     const post = new Post({
         _id: req.params.id,
         title: req.body.title,
@@ -126,7 +130,7 @@ router.get("/:id", (req, res, next) => {
 });
 
 // Delete a post by ID
-router.delete(":id", (req, res, next) => {
+router.delete(":id", checkAuth, (req, res, next) => {
     Post.deleteOne({ _id: req.params.id })
         .then(result => {
             if (result.deletedCount > 0) {
